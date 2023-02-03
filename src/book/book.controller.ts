@@ -10,15 +10,15 @@ export class BookController {
   constructor(private bookService: BookService) {}
 
   // Get All Books
-  // @Get()
-  // async getAllBooks(): Promise<Book[]> {
-  //   return this.bookService.findAll();
-  // }
+  @Get()
+  async getAllBooks(): Promise<Book[]> {
+    return this.bookService.findAll();
+  }
 
   // Get All Books with Query
-  @Get()
-  async getAllBooks(@Query() query:ExpressQuery): Promise<Book[]> {
-    return this.bookService.findAll(query);
+  @Get('search')
+  async getSearchedBooks(@Query() query:ExpressQuery): Promise<Book[]> {
+    return this.bookService.findSearched(query);
   }
 
   // Create Book

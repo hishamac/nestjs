@@ -1,3 +1,5 @@
-28:45
+18:10
 
 https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace
+
+echo $GITHUB_TOKEN
