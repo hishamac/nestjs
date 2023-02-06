@@ -1,4 +1,5 @@
-import { isEnum, IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEmpty, isEnum, IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { User } from '../../auth/schemas/user.schema';
 import { Category } from '../schemas/book.schema';
 
 export class CreateBookDto {
@@ -12,7 +13,7 @@ export class CreateBookDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly author: string;
+  readonly content: string;
 
   @IsNotEmpty()
   @IsNumber()
@@ -21,4 +22,7 @@ export class CreateBookDto {
   @IsNotEmpty()
   @IsEnum(Category,{message:'Please enter correct category'})
   readonly category: Category;
+
+  @IsEmpty({message:'Cannot pass author Id'})
+  readonly author: User;
 }

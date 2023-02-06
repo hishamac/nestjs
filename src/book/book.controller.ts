@@ -1,9 +1,20 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './schemas/book.schema';
-import {Query as ExpressQuery} from 'express-serve-static-core'
+import { Query as ExpressQuery } from 'express-serve-static-core';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('books')
@@ -18,7 +29,7 @@ export class BookController {
 
   // Get All Books with Query
   @Get('search')
-  async getSearchedBooks(@Query() query:ExpressQuery): Promise<Book[]> {
+  async getSearchedBooks(@Query() query: ExpressQuery): Promise<Book[]> {
     return this.bookService.findSearched(query);
   }
 
@@ -28,8 +39,9 @@ export class BookController {
   async createBook(
     @Body()
     book: CreateBookDto,
+    @Req() req,
   ): Promise<Book> {
-    return this.bookService.create(book);
+    return this.bookService.create(book, req.user);
   }
 
   // Get One Book By Id
@@ -49,7 +61,7 @@ export class BookController {
     @Body()
     book: UpdateBookDto,
   ): Promise<Book> {
-    return this.bookService.updateById(id,book);
+    return this.bookService.updateById(id, book);
   }
 
   // Delete One Book By Id
